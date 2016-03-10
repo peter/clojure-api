@@ -5,7 +5,7 @@
 (defn index-handler [request]
   {:status 200
    :headers {"Content-Type" "text/html"}
-   :body "Welcome to tittarsiffror-api"})
+   :body "Welcome to Clojure API"})
 
 (defn missing-handler [request]
   {:status 404
@@ -22,7 +22,7 @@
 
 (defn app [request]
   (let [route (first (filter (partial route-match? request) routes))
-        handler (or (:handler route) missing-handler)]
+        handler (get route :handler missing-handler)]
     (println "app request " (:request-method request) (:uri request) (pr-str route))
     (handler request)))
 
