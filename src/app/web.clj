@@ -26,6 +26,6 @@
     (println "app request " (:request-method request) (:uri request) (pr-str route))
     (handler request)))
 
-(defn -main [& [port]]
-  (let [port (Integer. (or port (System/getenv "PORT") 5000))]
+(defn -main []
+  (let [port (Integer. (or (System/getenv "PORT") 5000))]
     (jetty/run-jetty app {:port port :join? false})))

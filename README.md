@@ -46,7 +46,6 @@ Also in project.clj, add these lines:
 :uberjar-name "clojure-api-standalone.jar"
 ```
 
-
 Edit src/clojure_api/core.clj to read:
 
 ```clojure
@@ -72,10 +71,16 @@ lein run
 
 Visit [localhost:5000](http://localhost:5000) in your browser.
 
-To deploy to Heroku, add a Procfile with this line:
+To deploy to Heroku, make sure you have a Heroku account and the Heroku toolbelt installed. Then add a Procfile with this line:
 
 ```
 web: java $JVM_OPTS -cp target/uberjar/clojure-api-standalone.jar clojure.main -m clojure-api.core
+```
+
+Check that your Procfile works locally:
+
+```
+heroku local web
 ```
 
 Add your app to git and deploy:
