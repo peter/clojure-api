@@ -4,6 +4,8 @@ A barebones Clojure REST API, for learning purposes.
 
 For a more extensive Clojure API example see my [Clojure CMS API](https://github.com/peter/clojure-cms-api).
 
+The data endpoint uses the [GiphyAPI](https://github.com/Giphy/GiphyAPI).
+
 ## TODO
 
 * Useful ring development/production middleware

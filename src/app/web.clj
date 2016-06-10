@@ -1,6 +1,7 @@
 (ns app.web
   (:require [ring.adapter.jetty :as jetty]
             [ring.middleware.params :refer [wrap-params]]
+            [ring.middleware.reload :refer [wrap-reload]]
             [ring.middleware.keyword-params :refer [wrap-keyword-params]]
             [ring.middleware.json :refer [wrap-json-params wrap-json-response]]
             [clojure.java.io :as io]
@@ -11,10 +12,12 @@
    :headers {"Content-Type" "text/html"}
    :body "Welcome to Clojure API"})
 
+; NOTE: see https://github.com/Giphy/GiphyAPI
 (defn data-handler [request]
   (let [query {:q (get-in request [:params :q]) :api_key "dc6zaTOxFJmzC"}
-        response (client/get "http://api.giphy.com/v1/gifs/search" {:query-params query})
-        data (:body response)]
+        response (client/get "http://api.giphy.com/v1/gifs/search"
+                    {:query-params query :as :json})
+        data (get-in response [:body :data 0 :images])]
     {:status 200
      :headers {"Content-Type" "application/json"}
      :body data}))
@@ -41,6 +44,7 @@
 
 (defn with-middleware [handler]
   (-> handler
+    (wrap-reload)
     (wrap-keyword-params)
     (wrap-json-params {})
     (wrap-params {})
