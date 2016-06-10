@@ -3,7 +3,10 @@
   :license {:name "Eclipse Public License v1.0"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   :dependencies [[org.clojure/clojure "1.8.0"]
-                 [ring/ring-jetty-adapter "1.4.0"]]
+                 [ring/ring-jetty-adapter "1.4.0"]
+                 [ring/ring-json "0.4.0"]
+                 [ring/ring-devel "1.4.0"]
+                 [clj-http "2.2.0"]]
   :main app.web
   :min-lein-version "2.0.0"
   :uberjar-name "clojure-api-standalone.jar"

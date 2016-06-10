@@ -20,6 +20,12 @@ Make sure you have Clojure installed.  Also, install the [Heroku Toolbelt](https
 lein run
 ```
 
+## Testing Locally
+
+```
+curl http://localhost:5000/data?q=cat
+```
+
 ## Deploying to Heroku
 
 ```sh

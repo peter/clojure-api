@@ -1,11 +1,23 @@
 (ns app.web
   (:require [ring.adapter.jetty :as jetty]
-            [clojure.java.io :as io]))
+            [ring.middleware.params :refer [wrap-params]]
+            [ring.middleware.keyword-params :refer [wrap-keyword-params]]
+            [ring.middleware.json :refer [wrap-json-params wrap-json-response]]
+            [clojure.java.io :as io]
+            [clj-http.client :as client]))
 
 (defn index-handler [request]
   {:status 200
    :headers {"Content-Type" "text/html"}
    :body "Welcome to Clojure API"})
+
+(defn data-handler [request]
+  (let [query {:q (get-in request [:params :q]) :api_key "dc6zaTOxFJmzC"}
+        response (client/get "http://api.giphy.com/v1/gifs/search" {:query-params query})
+        data (:body response)]
+    {:status 200
+     :headers {"Content-Type" "application/json"}
+     :body data}))
 
 (defn missing-handler [request]
   {:status 404
@@ -14,6 +26,7 @@
 
 (def routes [
     {:methods #{:get} :path "/" :handler index-handler}
+    {:methods #{:get} :path "/data" :handler data-handler}
   ])
 
 (defn route-match? [request route]
@@ -26,6 +39,13 @@
     (println "app request " (:request-method request) (:uri request) (pr-str route))
     (handler request)))
 
+(defn with-middleware [handler]
+  (-> handler
+    (wrap-keyword-params)
+    (wrap-json-params {})
+    (wrap-params {})
+    (wrap-json-response {:pretty true})))
+
 (defn -main []
   (let [port (Integer. (or (System/getenv "PORT") 5000))]
-    (jetty/run-jetty app {:port port :join? false})))
+    (jetty/run-jetty (with-middleware app) {:port port :join? false})))
