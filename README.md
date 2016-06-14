@@ -6,29 +6,33 @@ For a more extensive Clojure API example see my [Clojure CMS API](https://github
 
 The data endpoint uses the [GiphyAPI](https://github.com/Giphy/GiphyAPI).
 
-## TODO
+## Getting Started
 
-* Useful ring development/production middleware
-* Use pcalls to make API requests in parallel
-* Database access with honeysql/jdbc?
-
-## Dependencies
-
-Make sure you have Clojure installed.  Also, install the [Heroku Toolbelt](https://toolbelt.heroku.com/).
-
-## Running Locally
+Check your Java version, you need 1.6 or later:
 
 ```
+java -v
+```
+
+Install Clojure by installing the [Leiningen Build Tool](http://leiningen.org/#install)
+
+Clone this repo and start the server:
+
+```
+git clone git@github.com:peter/clojure-api.git
+cd clojure-api
 lein run
 ```
 
-## Testing Locally
+Test the API:
 
 ```
 curl http://localhost:5000/data?q=cat
 ```
 
 ## Deploying to Heroku
+
+First install the [Heroku Toolbelt](https://toolbelt.heroku.com/) and create a Heroku account. Then you can create an app and deploy:
 
 ```sh
 $ heroku create
