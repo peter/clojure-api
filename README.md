@@ -47,10 +47,11 @@ lein new app clojure-api
 cd clojure-api
 ```
 
-Edit project.clj and add to :dependencies:
+Edit project.clj and add [ring-jetty-adapter](https://github.com/ring-clojure/ring/blob/master/ring-jetty-adapter/project.clj)
+to :dependencies:
 
 ```clojure
-[ring/ring-jetty-adapter "1.4.0"]
+[ring/ring-jetty-adapter "1.6.2"]
 ```
 
 Also in project.clj, add these lines:
@@ -94,6 +95,7 @@ web: java $JVM_OPTS -cp target/uberjar/clojure-api-standalone.jar clojure.main -
 Check that your Procfile works locally:
 
 ```
+lein uberjar
 heroku local web
 ```
 
